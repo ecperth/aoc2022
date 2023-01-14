@@ -3,16 +3,17 @@ package day3
 import (
 	"aoc2022/days"
 	"aoc2022/utils"
+	"strconv"
 	"unicode"
 )
 
 var input = utils.ReadInput(3)
-var Day3 = days.Day{
+var Solution = days.Day{
 	Part1: part1,
 	Part2: part2,
 }
 
-func part1() int {
+func part1() string {
 
 	result := 0
 	for _, rucksack := range input {
@@ -37,10 +38,10 @@ func part1() int {
 			}
 		}
 	}
-	return result
+	return strconv.Itoa(result)
 }
 
-func part2() int {
+func part2() string {
 
 	result := 0
 	for rucksack := 0; rucksack < len(input)-2; rucksack = rucksack + 3 {
@@ -70,5 +71,5 @@ func part2() int {
 		}
 	}
 
-	return result
+	return strconv.Itoa(result)
 }

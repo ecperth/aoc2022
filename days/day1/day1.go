@@ -8,12 +8,12 @@ import (
 )
 
 var input = utils.ReadInput(1)
-var Day1 = days.Day{
+var Solution = days.Day{
 	Part1: part1,
 	Part2: part2,
 }
 
-func part1() int {
+func part1() string {
 
 	mostCalories := 0
 	calorieCounter := 0
@@ -29,10 +29,10 @@ func part1() int {
 		}
 	}
 
-	return mostCalories
+	return strconv.Itoa(mostCalories)
 }
 
-func part2() int {
+func part2() string {
 
 	topThree := []int{0, 0, 0}
 	calorieCounter := 0
@@ -55,5 +55,5 @@ func part2() int {
 		result += calories
 	}
 
-	return result
+	return strconv.Itoa(result)
 }

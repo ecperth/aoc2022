@@ -5,6 +5,8 @@ import (
 	"aoc2022/days/day1"
 	"aoc2022/days/day2"
 	"aoc2022/days/day3"
+	"aoc2022/days/day4"
+	"aoc2022/days/day5"
 	"fmt"
 	"os"
 	"strconv"
@@ -12,9 +14,11 @@ import (
 )
 
 var solutions = [25]days.Day{
-	day1.Day1,
-	day2.Day2,
-	day3.Day3,
+	day1.Solution,
+	day2.Solution,
+	day3.Solution,
+	day4.Solution,
+	day5.Solution,
 }
 
 func main() {
@@ -28,9 +32,9 @@ func main() {
 
 	startTime := time.Now()
 	part1 := solutions[day-1].Part1()
-	fmt.Printf("Part 1: %d\t Solved in %v\n", part1, time.Now().Sub(startTime))
+	fmt.Printf("Part 1: %s\t Solved in %v\n", part1, time.Now().Sub(startTime))
 
 	startTime = time.Now()
 	part2 := solutions[day-1].Part2()
-	fmt.Printf("Part 2: %d\t Solved in %v\n", part2, time.Now().Sub(startTime))
+	fmt.Printf("Part 2: %s\t Solved in %v\n", part2, time.Now().Sub(startTime))
 }

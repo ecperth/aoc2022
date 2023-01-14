@@ -1,6 +1,6 @@
 package days
 
 type Day struct {
-	Part1 func() int
-	Part2 func() int
+	Part1 func() string
+	Part2 func() string
 }

@@ -3,16 +3,17 @@ package day2
 import (
 	"aoc2022/days"
 	"aoc2022/utils"
+	"strconv"
 	"strings"
 )
 
 var input = utils.ReadInput(2)
-var Day2 = days.Day{
+var Solution = days.Day{
 	Part1: part1,
 	Part2: part2,
 }
 
-func part1() int {
+func part1() string {
 
 	shapes := map[string]int{
 		"A": 0,
@@ -38,10 +39,10 @@ func part1() int {
 		totalScore += roundScore
 	}
 
-	return totalScore
+	return strconv.Itoa(totalScore)
 }
 
-func part2() int {
+func part2() string {
 
 	shapes := map[string]int{
 		"A": 0,
@@ -65,5 +66,5 @@ func part2() int {
 		}
 	}
 
-	return totalScore
+	return strconv.Itoa(totalScore)
 }
