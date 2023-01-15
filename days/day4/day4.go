@@ -2,12 +2,12 @@ package day4
 
 import (
 	"aoc2022/days"
-	"aoc2022/utils"
+	file "aoc2022/utils"
 	"strconv"
 	"strings"
 )
 
-var input = utils.ReadInput(4)
+var input = file.ReadInput(4)
 var Solution = days.Day{
 	Part1: part1,
 	Part2: part2,
