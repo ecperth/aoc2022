@@ -2,11 +2,11 @@ package day5
 
 import (
 	"aoc2022/days"
-	file "aoc2022/utils"
+	"aoc2022/utils"
 	"fmt"
 )
 
-var input = file.ReadInput(5)
+var input = utils.ReadInputAsStrings(5)
 var Solution = days.Day{
 	Part1: part1,
 	Part2: part2,

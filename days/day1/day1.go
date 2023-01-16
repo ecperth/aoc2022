@@ -2,12 +2,12 @@ package day1
 
 import (
 	"aoc2022/days"
-	file "aoc2022/utils"
+	"aoc2022/utils"
 	"sort"
 	"strconv"
 )
 
-var input = file.ReadInput(1)
+var input = utils.ReadInputAsStrings(1)
 var Solution = days.Day{
 	Part1: part1,
 	Part2: part2,

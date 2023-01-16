@@ -2,14 +2,14 @@ package day7
 
 import (
 	"aoc2022/days"
-	file "aoc2022/utils"
+	"aoc2022/utils"
 	"fmt"
 	"sort"
 	"strconv"
 	"strings"
 )
 
-var input = file.ReadInput(7)
+var input = utils.ReadInputAsStrings(7)
 var Solution = days.Day{
 	Part1: part1,
 	Part2: part2,
@@ -70,11 +70,7 @@ func part2() string {
 func buildFileSystemFromInput(input []string) *dir {
 	var fileSystem *dir
 	wd := fileSystem
-	wd.subDirs = map[string]*dir{"/": {
-		name:    "/",
-		subDirs: map[string]*dir{},
-		files:   map[string]int{},
-	}}
+	wd.subDirs = map[string]*dir{"/": {"/", map[string]*dir{}, map[string]int{}}}
 
 	for _, line := range input {
 		tokens := strings.Split(line, " ")
@@ -93,11 +89,7 @@ func buildFileSystemFromInput(input []string) *dir {
 			dirName := tokens[1]
 			_, ok := wd.subDirs[dirName]
 			if !ok {
-				wd.subDirs[dirName] = &dir{
-					name:    dirName,
-					subDirs: map[string]*dir{"..": wd},
-					files:   map[string]int{},
-				}
+				wd.subDirs[dirName] = &dir{dirName, map[string]*dir{"..": wd}, map[string]int{}}
 			}
 		default:
 			fileName := tokens[1]

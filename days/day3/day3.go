@@ -2,15 +2,15 @@ package day3
 
 import (
 	"aoc2022/days"
-	file "aoc2022/utils"
+	"aoc2022/utils"
 	"strconv"
 	"unicode"
 )
 
-var input = file.ReadInput(3)
+var input = utils.ReadInputAsStrings(3)
 var Solution = days.Day{
-	Part1: part1,
-	Part2: part2,
+	part1,
+	part2,
 }
 
 func part1() string {
