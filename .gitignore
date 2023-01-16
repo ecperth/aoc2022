@@ -1,4 +1,7 @@
 #goland
-/.idea
+/.idea/*
+!/.idea/fileTemplates
+/.idea/fileTemplates/*
+!/.idea/fileTemplates/aoc_2022_day.go
 
 /inputs
