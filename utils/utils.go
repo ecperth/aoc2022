@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"sort"
 )
 
 func ReadInputAsStrings(day int) []string {
@@ -50,4 +51,17 @@ func Sign(x int) int {
 	} else {
 		return -1
 	}
+}
+
+func SortMapKeysByValue[kT comparable, vT int](m map[kT]vT) []kT {
+	keys := make([]kT, 0, len(m))
+	for key := range m {
+		keys = append(keys, key)
+	}
+
+	sort.SliceStable(keys, func(i, j int) bool {
+		return m[keys[i]] < m[keys[j]]
+	})
+
+	return keys
 }
