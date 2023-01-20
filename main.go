@@ -6,6 +6,7 @@ import (
 	"aoc2022/days/day10"
 	"aoc2022/days/day11"
 	"aoc2022/days/day12"
+	"aoc2022/days/day13"
 	"aoc2022/days/day2"
 	"aoc2022/days/day3"
 	"aoc2022/days/day4"
@@ -33,6 +34,7 @@ var solutions = [25]days.Day{
 	day10.Solution,
 	day11.Solution,
 	day12.Solution,
+	day13.Solution,
 }
 
 func main() {

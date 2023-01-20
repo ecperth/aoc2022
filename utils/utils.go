@@ -36,6 +36,12 @@ func getScanner(day int) *bufio.Scanner {
 	return bufio.NewScanner(file)
 }
 
+type Number interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64 |
+		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr |
+		~float32 | ~float64
+}
+
 func Abs(x int) int {
 	if x < 0 {
 		return -x
@@ -43,7 +49,7 @@ func Abs(x int) int {
 	return x
 }
 
-func Sign(x int) int {
+func Sign[T Number](x T) int {
 	if x == 0 {
 		return 0
 	} else if x > 0 {

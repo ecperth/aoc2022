@@ -18,8 +18,7 @@ var empty struct{}
 var startNode, endNode = findStartAndEnd()
 
 // find start / end and replace with a and z
-func findStartAndEnd() ([2]int, [2]int) {
-	var s, e [2]int
+func findStartAndEnd() (s [2]int, e [2]int) {
 	foundStart, foundEnd := false, false
 	for !foundStart && !foundEnd {
 		for y, line := range input {
@@ -36,7 +35,7 @@ func findStartAndEnd() ([2]int, [2]int) {
 			}
 		}
 	}
-	return s, e
+	return
 }
 
 func part1() string {
