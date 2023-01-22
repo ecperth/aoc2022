@@ -65,9 +65,9 @@ func part1() string {
 			nextSandPos, moved := moveSand(currentSandPos, rocks, sand)
 			if !moved {
 				sand[currentSandPos] = empty
+				updateScreen(minX, maxX, currentSandPos)
 				break
 			}
-			updateScreen(minX, maxX, currentSandPos, nextSandPos)
 			currentSandPos = nextSandPos
 		}
 		drawScreen(minX, maxX, len(sand))
@@ -167,10 +167,9 @@ func initialiseScreen(maxY, minX, maxX int, rocks map[[2]int]struct{}) {
 	screen[len(screen)-1] = 10
 }
 
-func updateScreen(minX, maxX int, lastSandPos, currentSandPos [2]int) {
+func updateScreen(minX, maxX int, currentSandPos [2]int) {
 	width := maxX - minX + 1
 	if currentSandPos[0] >= minX && currentSandPos[0] <= maxX {
-		screen[lastSandPos[1]*(width+1)+lastSandPos[0]-minX] = '.'
 		screen[currentSandPos[1]*(width+1)+currentSandPos[0]-minX] = 'o'
 	}
 	if currentSandPos[1] >= (offset+1)*displayHeight {
