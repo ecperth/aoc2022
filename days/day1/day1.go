@@ -24,8 +24,7 @@ func part1() string {
 			}
 			calorieCounter = 0
 		} else {
-			calories, _ := strconv.Atoi(line)
-			calorieCounter += calories
+			calorieCounter += utils.AtoiUnsafe(line)
 		}
 	}
 
@@ -45,8 +44,7 @@ func part2() string {
 			}
 			calorieCounter = 0
 		} else {
-			calories, _ := strconv.Atoi(line)
-			calorieCounter += calories
+			calorieCounter += utils.AtoiUnsafe(line)
 		}
 	}
 

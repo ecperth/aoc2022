@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"sort"
+	"strconv"
 )
 
 func ReadInputAsStrings(day int) []string {
@@ -36,6 +37,14 @@ func getScanner(day int) *bufio.Scanner {
 	return bufio.NewScanner(file)
 }
 
+func AtoiUnsafe(input string) int {
+	i, err := strconv.Atoi(input)
+	if err != nil {
+		panic(err)
+	}
+	return i
+}
+
 type Number interface {
 	~int | ~int8 | ~int16 | ~int32 | ~int64 |
 		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr |
@@ -57,6 +66,18 @@ func Sign[T Number](x T) int {
 	} else {
 		return -1
 	}
+}
+
+func Max[T Number](x1, x2 T) T {
+	if x1 > x2 {
+		return x1
+	}
+	return x2
+}
+
+func Contains[kT comparable, vT any](m map[kT]vT, k kT) (contains bool) {
+	_, contains = m[k]
+	return
 }
 
 func SortMapKeysByValue[kT comparable, vT int](m map[kT]vT) []kT {

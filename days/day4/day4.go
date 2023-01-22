@@ -13,10 +13,10 @@ var Solution = days.Day{
 	Part2: part2,
 }
 
-func toInts(sections []string) (int, int) {
-	start, _ := strconv.Atoi(sections[0])
-	end, _ := strconv.Atoi(sections[1])
-	return start, end
+func toInts(sections []string) (start int, end int) {
+	start = utils.AtoiUnsafe(sections[0])
+	end = utils.AtoiUnsafe(sections[1])
+	return
 }
 
 func part1() string {

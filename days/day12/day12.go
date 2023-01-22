@@ -59,8 +59,7 @@ func part1() string {
 						if [2]int{node[0] + dir[0], node[1] + dir[1]} == endNode {
 							return strconv.Itoa(currentDepth + 1)
 						}
-						_, ok := visitedNodes[[2]int{node[0] + dir[0], node[1] + dir[1]}]
-						if !ok {
+						if !utils.Contains(visitedNodes, [2]int{node[0] + dir[0], node[1] + dir[1]}) {
 							nextDepthNodes[[2]int{node[0] + dir[0], node[1] + dir[1]}] = empty
 						}
 					}
@@ -102,8 +101,7 @@ func part2() string {
 						if input[node[0]+dir[0]][node[1]+dir[1]] == 'a' {
 							return strconv.Itoa(currentDepth + 1)
 						}
-						_, ok := visitedNodes[[2]int{node[0] + dir[0], node[1] + dir[1]}]
-						if !ok {
+						if !utils.Contains(visitedNodes, [2]int{node[0] + dir[0], node[1] + dir[1]}) {
 							nextDepthNodes[[2]int{node[0] + dir[0], node[1] + dir[1]}] = empty
 						}
 					}

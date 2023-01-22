@@ -28,8 +28,7 @@ func part1() string {
 				sigStrengths += rv * (c + 1)
 			}
 			c++
-			v, _ := strconv.Atoi(tokens[1])
-			rv += v
+			rv += utils.AtoiUnsafe(tokens[1])
 		}
 	}
 
@@ -57,8 +56,7 @@ func part2() string {
 				display = append(display, byte('.'))
 			}
 			c++
-			v, _ := strconv.Atoi(tokens[1])
-			rv += v
+			rv += utils.AtoiUnsafe(tokens[1])
 		}
 		if c%40 == 0 {
 			display = append(display, byte('\n'))

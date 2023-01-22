@@ -12,7 +12,7 @@ import (
 func main() {
 	day, err := strconv.Atoi(os.Args[1])
 	if err != nil {
-		fmt.Errorf("first argument must be a valid integer")
+		panic(fmt.Errorf("first argument must be a valid integer"))
 	}
 
 	err = downloadInput(day, os.Getenv("AOC_SESSION"))

@@ -86,16 +86,13 @@ func buildFileSystemFromInput(input []string) (fileSystem *dir) {
 			}
 		case DIR:
 			dirName := tokens[1]
-			_, ok := wd.subDirs[dirName]
-			if !ok {
+			if !utils.Contains(wd.subDirs, dirName) {
 				wd.subDirs[dirName] = &dir{dirName, map[string]*dir{"..": wd}, map[string]int{}}
 			}
 		default:
 			fileName := tokens[1]
-			_, ok := wd.files[fileName]
-			if !ok {
-				fileSize, _ := strconv.Atoi(tokens[0])
-				wd.files[fileName] = fileSize
+			if !utils.Contains(wd.files, fileName) {
+				wd.files[fileName] = utils.AtoiUnsafe(tokens[0])
 			}
 		}
 	}
