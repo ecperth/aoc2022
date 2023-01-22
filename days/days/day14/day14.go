@@ -3,8 +3,10 @@ package day14
 import (
 	"aoc2022/days"
 	"aoc2022/utils"
+	"fmt"
 	"strconv"
 	"strings"
+	"time"
 )
 
 var input = utils.ReadInputAsStrings(14)
@@ -14,6 +16,11 @@ var Solution = days.Day{
 }
 
 var empty struct{}
+
+const displayHeight = 55
+
+var offset = 0
+var screen []byte
 
 func interpolate(p1, p2 [2]int) (points [][2]int) {
 	n := 0
@@ -43,14 +50,15 @@ func interpolate(p1, p2 [2]int) (points [][2]int) {
 
 func part1() string {
 
-	rocks, maxY := makeRocksMap(input)
+	rocks, maxY, minX, maxX := makeRocksMap(input)
 	sand := make(map[[2]int]struct{})
+	initialiseScreen(maxY, minX, maxX, rocks)
 	reachedAbyss := false
 	for !reachedAbyss {
 		currentSandPos := [2]int{500, 0}
 		for {
 			//if the y pos of falling sand is = maxY we are done
-			if currentSandPos[1] == maxY {
+			if currentSandPos[1] >= maxY {
 				reachedAbyss = true
 				break
 			}
@@ -59,15 +67,17 @@ func part1() string {
 				sand[currentSandPos] = empty
 				break
 			}
+			updateScreen(minX, maxX, currentSandPos, nextSandPos)
 			currentSandPos = nextSandPos
 		}
+		drawScreen(minX, maxX, len(sand))
 	}
 	return strconv.Itoa(len(sand))
 }
 
 func part2() string {
 
-	rocks, maxY := makeRocksMap(input)
+	rocks, maxY, _, _ := makeRocksMap(input)
 	sand := make(map[[2]int]struct{})
 	for {
 		startPoint := [2]int{500, 0}
@@ -77,8 +87,8 @@ func part2() string {
 		}
 		currentSandPos := startPoint
 		for {
-			//if sand y pos is i passed the maxY then stop falling and move to next grain
-			if currentSandPos[1] == maxY+1 {
+			//if sand y pos is 1 greater than the maxY then stop falling and move to next grain
+			if currentSandPos[1] >= maxY+1 {
 				sand[currentSandPos] = empty
 				break
 			}
@@ -94,15 +104,15 @@ func part2() string {
 }
 
 // create a set of xy coords which represent the rocks in the cavern
-func makeRocksMap(input []string) (map[[2]int]struct{}, int) {
+func makeRocksMap(input []string) (map[[2]int]struct{}, int, int, int) {
 	rocks := make(map[[2]int]struct{})
-	maxY := 0
+	maxY, minX, maxX := 0, 1000, 0
 	for _, row := range input {
 		ls := strings.Split(row, " -> ")
 
 		left, right, _ := strings.Cut(ls[0], ",")
 		x1, y1 := utils.AtoiUnsafe(left), utils.AtoiUnsafe(right)
-		maxY = utils.Max(maxY, y1)
+		maxY, minX, maxX = utils.Max(maxY, y1), utils.Min(minX, x1), utils.Max(maxX, x1)
 
 		for i := 1; i < len(ls); i++ {
 			left, right, _ = strings.Cut(ls[i], ",")
@@ -111,15 +121,15 @@ func makeRocksMap(input []string) (map[[2]int]struct{}, int) {
 				rocks[point] = empty
 			}
 			x1, y1 = x2, y2
-			maxY = utils.Max(maxY, y1)
+			maxY, minX, maxX = utils.Max(maxY, y1), utils.Min(minX, x1), utils.Max(maxX, x1)
 		}
 	}
-	return rocks, maxY
+	return rocks, maxY, minX, maxX
 }
 
 // receives the current position of falling grain of sand, the rocks, already fallen sand.
 // returns next position of passed in grain of sand and if the sand moved or not.
-func moveSand(currentSandPos [2]int, rocks map[[2]int]struct{}, sand map[[2]int]struct{}) ([2]int, bool) {
+func moveSand(currentSandPos [2]int, rocks, sand map[[2]int]struct{}) ([2]int, bool) {
 	//down
 	nextSandPos := [2]int{currentSandPos[0], currentSandPos[1] + 1}
 	if !utils.Contains(rocks, nextSandPos) && !utils.Contains(sand, nextSandPos) {
@@ -137,4 +147,48 @@ func moveSand(currentSandPos [2]int, rocks map[[2]int]struct{}, sand map[[2]int]
 	}
 	//could not move
 	return currentSandPos, false
+}
+
+func initialiseScreen(maxY, minX, maxX int, rocks map[[2]int]struct{}) {
+	width := maxX - minX + 1
+	screen = make([]byte, (width+1)*(maxY+1))
+	for y := 0; y <= maxY; y++ {
+
+		for x := minX; x <= maxX; x++ {
+			pixel := [2]int{x, y}
+			c := byte('.')
+			if utils.Contains(rocks, pixel) {
+				c = '|'
+			}
+			screen[y*(width+1)+x-minX] = c
+		}
+		screen[(y+1)*(width+1)-1] = 10
+	}
+	screen[len(screen)-1] = 10
+}
+
+func updateScreen(minX, maxX int, lastSandPos, currentSandPos [2]int) {
+	width := maxX - minX + 1
+	if currentSandPos[0] >= minX && currentSandPos[0] <= maxX {
+		screen[lastSandPos[1]*(width+1)+lastSandPos[0]-minX] = '.'
+		screen[currentSandPos[1]*(width+1)+currentSandPos[0]-minX] = 'o'
+	}
+	if currentSandPos[1] >= (offset+1)*displayHeight {
+		offset++
+	}
+}
+
+func drawScreen(minX, maxX int, sandCount int) {
+
+	width := maxX - minX + 1
+	startIndex := (width + 1) * displayHeight * offset
+	endIndex := startIndex + (width+1)*displayHeight
+	if endIndex >= len(screen) {
+		endIndex = len(screen)
+	}
+
+	utils.ClearTerminal()
+	fmt.Print(string(screen[startIndex:endIndex]))
+	fmt.Printf("sand count: %d\n", sandCount)
+	time.Sleep(50 * time.Millisecond)
 }

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"os/exec"
 	"sort"
 	"strconv"
 )
@@ -37,6 +38,13 @@ func getScanner(day int) *bufio.Scanner {
 	return bufio.NewScanner(file)
 }
 
+func ClearTerminal() {
+	//linux
+	cmd := exec.Command("clear")
+	cmd.Stdout = os.Stdout
+	cmd.Run()
+}
+
 func AtoiUnsafe(input string) int {
 	i, err := strconv.Atoi(input)
 	if err != nil {
@@ -66,6 +74,13 @@ func Sign[T Number](x T) int {
 	} else {
 		return -1
 	}
+}
+
+func Min[T Number](x1, x2 T) T {
+	if x1 > x2 {
+		return x2
+	}
+	return x1
 }
 
 func Max[T Number](x1, x2 T) T {
