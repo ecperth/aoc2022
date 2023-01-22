@@ -67,8 +67,9 @@ func part2() string {
 	return "Not found"
 }
 
-func buildFileSystemFromInput(input []string) (fileSystem *dir) {
-	wd := fileSystem
+func buildFileSystemFromInput(input []string) dir {
+	var fileSystem dir
+	wd := &fileSystem
 	wd.subDirs = map[string]*dir{"/": {"/", map[string]*dir{}, map[string]int{}}}
 
 	for _, line := range input {
@@ -102,8 +103,9 @@ func buildFileSystemFromInput(input []string) (fileSystem *dir) {
 /*
 returns a map where the key is the pointer to a dir and the value is the total size of the dir
 */
-func getSubdirsAndSizes(currentDir *dir) (result map[*dir]int) {
+func getSubdirsAndSizes(currentDir *dir) map[*dir]int {
 	dirSize := 0
+	result := make(map[*dir]int)
 
 	for name, subDir := range currentDir.subDirs {
 		if name == ".." {
