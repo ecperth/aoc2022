@@ -103,12 +103,12 @@ func part2() string {
 				} else {
 					w = item + m.operand
 				}
-				//w %= lcm
+				w %= lcm
 
 				if w%m.test.divisor == 0 {
-					monkeys[m.test.passM].items = append(monkeys[m.test.passM].items, w%monkeys[m.test.passM].test.divisor)
+					monkeys[m.test.passM].items = append(monkeys[m.test.passM].items, w)
 				} else {
-					monkeys[m.test.failM].items = append(monkeys[m.test.failM].items, w%monkeys[m.test.failM].test.divisor)
+					monkeys[m.test.failM].items = append(monkeys[m.test.failM].items, w)
 
 				}
 				iCounts[mi] += 1
@@ -145,10 +145,11 @@ func parseMonkeysFromInput(input []string) []monkey {
 			m.operand = operand
 		}
 
-		//test
-		d, _ := strconv.Atoi(strings.TrimPrefix(input[i*monkeyLen+3], "  Test: divisible by "))
-		p, _ := strconv.Atoi(strings.TrimPrefix(input[i*monkeyLen+4], "    If true: throw to monkey "))
-		f, _ := strconv.Atoi(strings.TrimPrefix(input[i*monkeyLen+5], "    If false: throw to monkey "))
+		//tests
+		var d, p, f int
+		utils.SscanfUnsafe(strings.TrimSpace(input[i*monkeyLen+3]), "Test: divisible by %d", &d)
+		utils.SscanfUnsafe(strings.TrimSpace(input[i*monkeyLen+4]), "If true: throw to monkey %d", &p)
+		utils.SscanfUnsafe(strings.TrimSpace(input[i*monkeyLen+5]), "If false: throw to monkey %d", &f)
 		m.test = test{d, p, f}
 
 		monkeys[i] = m

@@ -42,7 +42,10 @@ func ClearTerminal() {
 	//linux
 	cmd := exec.Command("clear")
 	cmd.Stdout = os.Stdout
-	cmd.Run()
+	err := cmd.Run()
+	if err != nil {
+		panic(err)
+	}
 }
 
 func AtoiUnsafe(input string) int {
@@ -51,6 +54,13 @@ func AtoiUnsafe(input string) int {
 		panic(err)
 	}
 	return i
+}
+
+func SscanfUnsafe(input string, format string, args ...interface{}) {
+	_, err := fmt.Sscanf(input, format, args...)
+	if err != nil {
+		panic(err)
+	}
 }
 
 type Number interface {

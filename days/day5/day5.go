@@ -3,7 +3,6 @@ package day5
 import (
 	"aoc2022/days"
 	"aoc2022/utils"
-	"fmt"
 )
 
 var input = utils.ReadInputAsStrings(5)
@@ -58,11 +57,7 @@ func part1() string {
 	//process commands
 	for line := blankLineIndex + 1; line < len(input); line++ {
 		var count, src, dest int
-		_, err := fmt.Sscanf(input[line], "move %d from %d to %d", &count, &src, &dest)
-		if err != nil {
-			panic(fmt.Errorf("could not parse instruction om line %d", line))
-		}
-
+		utils.SscanfUnsafe(input[line], "move %d from %d to %d", &count, &src, &dest)
 		for i := 1; i <= count; i++ {
 			push(&supplyStacks[dest-1], pop(&supplyStacks[src-1], 1))
 		}
@@ -109,10 +104,7 @@ func part2() string {
 	//process commands
 	for line := blankLineIndex + 1; line < len(input); line++ {
 		var count, src, dest int
-		_, err := fmt.Sscanf(input[line], "move %d from %d to %d", &count, &src, &dest)
-		if err != nil {
-			panic(fmt.Errorf("could not parse instruction om line %d", line))
-		}
+		utils.SscanfUnsafe(input[line], "move %d from %d to %d", &count, &src, &dest)
 
 		push(&supplyStacks[dest-1], pop(&supplyStacks[src-1], count))
 	}

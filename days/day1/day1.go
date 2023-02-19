@@ -17,8 +17,8 @@ func part1() string {
 
 	mostCalories := 0
 	calorieCounter := 0
-	for i, line := range input {
-		if len(line) == 0 || i == len(input) {
+	for _, line := range input {
+		if len(line) == 0 {
 			if calorieCounter > mostCalories {
 				mostCalories = calorieCounter
 			}
@@ -26,6 +26,9 @@ func part1() string {
 		} else {
 			calorieCounter += utils.AtoiUnsafe(line)
 		}
+	}
+	if calorieCounter > mostCalories {
+		mostCalories = calorieCounter
 	}
 
 	return strconv.Itoa(mostCalories)
@@ -36,8 +39,8 @@ func part2() string {
 	topThree := []int{0, 0, 0}
 	calorieCounter := 0
 
-	for i, line := range input {
-		if len(line) == 0 || i == len(input) {
+	for _, line := range input {
+		if len(line) == 0 {
 			if calorieCounter > topThree[0] {
 				topThree[0] = calorieCounter
 				sort.Ints(topThree)
@@ -46,6 +49,10 @@ func part2() string {
 		} else {
 			calorieCounter += utils.AtoiUnsafe(line)
 		}
+	}
+	if calorieCounter > topThree[0] {
+		topThree[0] = calorieCounter
+		sort.Ints(topThree)
 	}
 
 	result := 0

@@ -15,9 +15,13 @@ func main() {
 		panic(fmt.Errorf("first argument must be a valid integer"))
 	}
 
-	err = downloadInput(day, os.Getenv("AOC_SESSION"))
+	aocSession, ok := os.LookupEnv("AOC_SESSION")
+	if !ok {
+		panic(fmt.Errorf("env var AOC_SESSION is not set"))
+	}
+	err = downloadInput(day, aocSession)
 	if err != nil {
-		return
+		panic(err)
 	}
 }
 
